@@ -40,20 +40,14 @@ class EmployeeResource extends Resource
                         ->afterStateUpdated(fn (Set $set) => $set('state_id', null))
                         ->required(),
                     Forms\Components\Select::make('state_id')
-                        ->options(fn (Get $get): array =>
-                            State::where('country_id', $get('country_id'))
-                                ->pluck('name', 'id')
-                                ->all())
+                        ->relationship(name: 'state', titleAttribute: 'name')
                         ->searchable()
                         ->preload()
                         ->live()
                         ->afterStateUpdated(fn (Set $set) => $set('city_id', null))
                         ->required(),
                     Forms\Components\Select::make('city_id')
-                        ->options(fn (Get $get): array =>
-                            City::where('state_id', $get('state_id'))
-                                ->pluck('name', 'id')
-                                ->all())
+                        ->relationship(name: 'city', titleAttribute: 'name')
                         ->searchable()
                         ->preload()
                         ->required(),
